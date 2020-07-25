@@ -2,12 +2,14 @@ import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import { LeafletEvent, LeafletMouseEvent } from 'leaflet';
+import { LeafletMouseEvent } from 'leaflet';
+
+import { toast } from 'react-toastify';
+
 import api from '../../services/api';
 import ibge from '../../services/ibge';
 import './styles.css';
 import logo from '../../assets/logo.svg';
-
 
 
 interface Item {
@@ -45,6 +47,12 @@ const CreatePoint: React.FC = () => {
   })
 
   const [selectedItems, setSeletedItems] = useState<number[]>([]);
+
+  const [showA, setShowA] = useState(true);
+
+  const toggleShowA = () => setShowA(!showA);
+
+  const history = useHistory()
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
@@ -141,8 +149,8 @@ const CreatePoint: React.FC = () => {
     console.log(data);
 
     await api.post('points', data)
-    alert('Ponto de Coleta Criado!')
-
+    toast.success('Ponto de coleta cadastrado');
+    history.push('/')
   }
 
 
@@ -270,7 +278,6 @@ const CreatePoint: React.FC = () => {
         <button type="submit">
           Cadastrar ponto de coleta
         </button>
-
       </form>
     </div>
   )

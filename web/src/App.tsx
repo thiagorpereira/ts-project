@@ -1,13 +1,15 @@
 import React from 'react';
-import Header from './Header';
-import Home from './pages/Home';
+import { ToastContainer } from 'react-toastify';
 import Routes from './routes';
+import GlobalStyle from './styles/global';
 import './App.css';
 
 function App() {
   return (
     <div>
       <Routes />
+      <GlobalStyle />
+      <ToastContainer autoClose={4000} />
     </div>
   );
 }
